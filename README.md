@@ -1,5 +1,7 @@
 # 知库 · Zhiku
 
+[![test](https://github.com/wushiyi105-jpg/zhiku/actions/workflows/test.yml/badge.svg)](https://github.com/wushiyi105-jpg/zhiku/actions/workflows/test.yml)
+
 把一堆自己的文档丢进去，问它问题。答案不是"看起来很对"，而是每句话后面都挂着 `[1]`，点一下就能跳回原文那一行。
 
 这是我做的第 5 个东西。前四个（做饭、记账、会议纪要、深度研究）都有一个共同毛病：它们很会"说"，但你没法核对它说的对不对。所以这次我换了个方向——让模型闭嘴，只在给定材料里找答案，找不到就说找不到。
@@ -24,7 +26,7 @@
 ## 快速开始
 
 ```bash
-git clone https://github.com/wushiyi105-jpg/知库.git
+git clone https://github.com/wushiyi105-jpg/zhiku.git
 cd 知库
 cp .env.example .env        # Windows: copy .env.example .env
 # 打开 .env，把 LLM_API_KEY 换成你自己的
@@ -124,3 +126,4 @@ CI 跑 Python 3.10–3.13 四个版本，见上方徽章。
 ## License
 
 MIT
+
