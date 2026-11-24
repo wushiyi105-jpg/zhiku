@@ -81,7 +81,7 @@ def chat(
     cfg = {**default_config(), **(config or {})}
     api_key = cfg.get("api_key")
     if not api_key:
-        raise LLMError("未配置 LLM_API_KEY(可用 --mock 离线演示模式)")
+        raise LLMError("未配置 LLM_API_KEY：在项目根目录的 .env 里填上")
 
     base = (cfg.get("base_url") or "https://api.openai.com/v1").rstrip("/")
     url = base + "/chat/completions"
@@ -175,3 +175,4 @@ def config_from_args(args) -> dict:
     if getattr(args, "model", None):
         cfg["model"] = args.model
     return cfg
+
