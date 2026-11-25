@@ -6,7 +6,7 @@ Drop your own documents in, ask questions. The answer is not "looks about right"
 
 This is the fifth thing I built. The first four (cooking, bookkeeping, meeting notes, deep research) shared one flaw: they were good at *talking*, but you had no way to check whether what they said was true. So I went the other direction — shut the model up, let it only find answers inside the material you gave it, and let it say "not found" when there is nothing.
 
-![demo](assets/demo.gif)
+![usage](assets/demo.gif)
 
 ## What it is
 
@@ -111,7 +111,7 @@ zhiku/
 │   └── web.py       http.server page + JSON endpoints
 ├── samples/         two sample documents
 ├── tests/           42 offline unit tests
-├── scripts/         demo GIF generator (dev only, needs Pillow)
+├── scripts/         usage GIF generator (dev only, needs Pillow)
 └── assets/demo.gif
 ```
 

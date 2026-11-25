@@ -8,7 +8,7 @@
 
 这是我做的第 5 个东西。前四个（做饭、记账、会议纪要、深度研究）都有一个共同毛病：它们很会"说"，但你没法核对它说的对不对。所以这次我换了个方向——让模型闭嘴，只在给定材料里找答案，找不到就说找不到。
 
-![demo](assets/demo.gif)
+![示例](assets/demo.gif)
 
 ## 它是什么
 
@@ -112,7 +112,7 @@ zhiku/
 │   └── web.py       http.server 页面 + JSON 接口
 ├── samples/         两篇示例语料
 ├── tests/           42 个离线单测
-├── scripts/         生成演示 GIF（开发期用，需 Pillow）
+├── scripts/         生成示例 GIF（开发期用，需 Pillow）
 └── assets/demo.gif
 ```
 
