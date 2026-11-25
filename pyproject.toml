@@ -1,0 +1,16 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "zhiku"
+version = "0.1.0"
+description = "本地知识库检索问答：BM25 检索、模型带引用作答、引用逐条回原文核对"
+requires-python = ">=3.10"
+license = {text = "MIT"}
+
+[project.scripts]
+zhiku = "zhiku.cli:main"
+
+[tool.setuptools]
+packages = ["zhiku"]

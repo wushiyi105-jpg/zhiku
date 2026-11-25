@@ -1,5 +1,7 @@
 # 知库 · Zhiku
 
+[![test](https://github.com/wushiyi105-jpg/zhiku/workflows/test/badge.svg)](https://github.com/wushiyi105-jpg/zhiku/actions) [![Python 3.10+](https://img.shields.io/badge/Python-3.10%2B-3776AB?logo=python&logoColor=white)]() [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](./LICENSE)
+
 [![test](https://github.com/wushiyi105-jpg/zhiku/actions/workflows/test.yml/badge.svg)](https://github.com/wushiyi105-jpg/zhiku/actions/workflows/test.yml)
 
 把一堆自己的文档丢进去，问它问题。答案不是"看起来很对"，而是每句话后面都挂着 `[1]`，点一下就能跳回原文那一行。
@@ -27,7 +29,7 @@
 
 ```bash
 git clone https://github.com/wushiyi105-jpg/zhiku.git
-cd 知库
+cd zhiku
 cp .env.example .env        # Windows: copy .env.example .env
 # 打开 .env，把 LLM_API_KEY 换成你自己的
 ```
