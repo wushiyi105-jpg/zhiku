@@ -58,6 +58,13 @@ python -m zhiku serve          # http://127.0.0.1:8765
 
 Import on the left, ask on the right; citation cards come out together with the answer.
 
+Run in Docker (the container uses the default port 8765):
+
+```bash
+docker build -t zhiku .
+docker run -p 8765:8765 zhiku
+```
+
 ## Command reference
 
 | Command | What it does |
@@ -71,6 +78,46 @@ Import on the left, ask on the right; citation cards come out together with the 
 | `python -m zhiku serve --port 8765` | Start the Web UI |
 
 Shared flags: `--db data/zhiku.db` switches the database file; `add --size 700 --overlap 80` adjusts chunk size and overlap.
+
+## 🤔 Why not just ask a general LLM
+
+A general model that has read your documents answers fluently. Zhiku adds the four things it cannot:
+
+1. **Citations jump back** — every citation records the character range in the source (characters 1234–1500), so the Web endpoint jumps straight to that line and the CLI shows the source too. A chat summary has no coordinates to verify.
+2. **No invention** — when the material does not contain the answer, the model must output `INSUFFICIENT`, which the program translates into "the material has nothing that answers this, I will not make it up". A citation number that does not exist, or an `[n]` whose surrounding 60 characters barely overlap the source, gets flagged.
+3. **Retrieval stays local** — a hand-written BM25 (Chinese split into single characters plus bigrams) runs on this machine, with documents and index in `data/zhiku.db`, behind no search service; a model call sends only the matched passages.
+4. **Structured output** — answer, citation numbers, character ranges and word-overlap scores are fixed fields, and `--json` supports further processing. A chat reply is prose you can only audit with your eyes.
+
+## 🎯 Use cases
+
+- **Looking up a company policy**: import the handbook and expense rules, ask "how many days do I have to submit a reimbursement", and the answer carries `[1]` that opens the exact paragraph — no more scrolling a PDF.
+- **Checking product answers before replying**: load the FAQ and support scripts, ask first, and quote the sourced basis instead of misremembering a policy.
+- **Comparing specifications**: put several specs in one library, ask how a clause is worded, and hand the cited range to a colleague.
+
+## 🗺 Roadmap
+
+- **Incremental indexing and deletion**: rebuild only changed documents and clear index entries when a document is removed.
+- **Separate knowledge bases**: one library per project so material does not leak into another project's answers.
+- **PDF/Word text extraction**: extract plain text locally before indexing, instead of copy-pasting.
+- **Citation highlighting**: not just jumping to the range but highlighting those characters in the Web UI.
+- **Retrieval evaluation set**: a set of question-to-document pairs to regress against when tuning retrieval.
+
+## ❓ FAQ
+
+**Where do I get an API key?**
+The project ships without one. It talks to DeepSeek (`https://api.deepseek.com`) by default — set `LLM_API_KEY`. Zhipu, OpenAI and a local Ollama work too via `LLM_BASE_URL` and `LLM_MODEL`.
+
+**Where is data stored, and is it uploaded?**
+In `data/zhiku.db`: documents, chunks and index stay on this machine. A model call sends the retrieved passages and the question, not the library.
+
+**Does it work without a key?**
+You can still retrieve and see the matched source passages with their character ranges; it will not compose an answer for you. A key is needed only for the written answer.
+
+**How do I switch models?**
+Change the three environment variables, or override per run with `--model`; switching endpoints needs no code change.
+
+**Why does it say the material has nothing?**
+Because the retrieved passages genuinely contain no basis. It does not guess or borrow from an adjacent topic; add the relevant document and ask again.
 
 ## How it works
 
