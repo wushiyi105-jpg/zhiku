@@ -1,4 +1,6 @@
 import json
+import os
+import tempfile
 import threading
 import unittest
 import urllib.request
@@ -6,9 +8,6 @@ from unittest import mock
 
 from zhiku import store
 from zhiku.web import make_server
-
-import os
-import tempfile
 
 
 class WebTest(unittest.TestCase):

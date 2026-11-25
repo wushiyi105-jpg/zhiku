@@ -4,7 +4,6 @@ import unittest
 
 from zhiku import store
 
-
 TEXT = "报销流程\n\n" + "员工需在费用发生后 15 天内提交单据。" * 40 + "\n\n主管审批后财务打款。"
 
 

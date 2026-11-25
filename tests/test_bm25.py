@@ -26,7 +26,6 @@ class TestBM25(unittest.TestCase):
         self.assertEqual(hits[0]["chunk_id"], 2)
 
     def test_top_k_limit(self):
-        idx = BM25Index(DOCS)
         idx2 = BM25Index(DOCS * 5)
         hits = idx2.search("报销", top_k=2)
         self.assertLessEqual(len(hits), 2)

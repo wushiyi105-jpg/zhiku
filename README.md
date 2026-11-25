@@ -1,6 +1,6 @@
 # 知库 · Zhiku
 
-[![test](https://github.com/wushiyi105-jpg/zhiku/workflows/test/badge.svg)](https://github.com/wushiyi105-jpg/zhiku/actions) [![Python 3.10+](https://img.shields.io/badge/Python-3.10%2B-3776AB?logo=python&logoColor=white)]() [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](./LICENSE)
+[![test](https://github.com/wushiyi105-jpg/zhiku/workflows/test/badge.svg)](https://github.com/wushiyi105-jpg/zhiku/actions) [![Python 3.10+](https://img.shields.io/badge/Python-3.10%2B-3776AB?logo=python&logoColor=white)]() [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](./LICENSE) [![codecov](https://codecov.io/gh/wushiyi105-jpg/zhiku/branch/main/graph/badge.svg)](https://codecov.io/gh/wushiyi105-jpg/zhiku)
 
 [![test](https://github.com/wushiyi105-jpg/zhiku/actions/workflows/test.yml/badge.svg)](https://github.com/wushiyi105-jpg/zhiku/actions/workflows/test.yml)
 
@@ -82,6 +82,21 @@ python -m zhiku serve          # http://127.0.0.1:8765
 2. **检索**：BM25 打分。词项是中文单字 + 相邻二元组，单字权重压到 0.3——不压的话"的/是/在"会把所有段落的分都抬起来。查询里的二元组一个都没命中的段落直接扔掉。
 3. **作答**：把 top 6 段编号塞进 prompt，规则写死：只能用材料、每句标 `[n]`、没有就说 `INSUFFICIENT`、材料互相矛盾要指出来。
 4. **核验**：解析答案里的 `[n]`，越界的剔掉并提示；再算一遍 `[n]` 前后文字与材料的词面重合，太低标黄。
+
+### 数据流
+
+一条数据在这几个模块之间怎么走：
+
+```mermaid
+flowchart LR
+    A[文档或问题] --> B[text.py<br/>切段 · 分词]
+    B --> C[bm25.py<br/>BM25 检索排序]
+    C --> D[answer.py<br/>取片段 · 拼提示词]
+    D --> E[llm.py<br/>模型作答并标引用]
+    E --> F{answer.py<br/>引用回原文核验}
+    F -->|查得到| G[cli.py / web.py<br/>输出 + 引用卡片]
+    F -->|查不到| H[标出来：疑似编造]
+```
 
 ## 目录结构
 

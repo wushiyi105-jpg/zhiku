@@ -1,7 +1,7 @@
+import os
 import unittest
 
 from zhiku.text import chunk_text, clean_text, read_document, strip_html, tokenize
-import os
 
 
 class TestClean(unittest.TestCase):
@@ -62,8 +62,9 @@ class TestChunk(unittest.TestCase):
 
 class TestReadDocument(unittest.TestCase):
     def test_unsupported_ext(self):
-        from zhiku.text import DocError
         import tempfile
+
+        from zhiku.text import DocError
 
         with tempfile.NamedTemporaryFile(suffix=".pdf", delete=False) as f:
             f.write(b"%PDF-1.4 fake")
