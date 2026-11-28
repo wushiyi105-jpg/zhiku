@@ -19,7 +19,7 @@ PAGE = """<!doctype html>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>知库 · 本地知识库问答</title>
+<title>知库 · 哪句能作数</title>
 <style>
   :root { --ink:#1c1f23; --muted:#6b7280; --line:#e6e8eb; --bg:#f7f8fa; --accent:#2f6f4f; }
   * { box-sizing: border-box; }
@@ -61,13 +61,84 @@ PAGE = """<!doctype html>
   .empty { color:var(--muted); font-size:14px; padding:30px 0; }
   .hint { color:var(--muted); font-size:12px; margin-top:6px; }
   #status { color:var(--muted); font-size:12px; min-height:16px; }
+
+h1{font-size:clamp(31px,5vw,39px);line-height:1.26}
+.prod{display:block;font-size:11px;line-height:1.4;letter-spacing:.18em;font-weight:650;margin-bottom:8px;opacity:.72}
+.lede,.sub{max-width:62ch;line-height:1.75}
+.route{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1px;margin:0 0 20px;border:1px solid var(--line);background:var(--line)}
+.route span{padding:11px 13px;background:var(--card);font-size:12px;line-height:1.5}
+.route b{display:block;font-size:10px;letter-spacing:.1em;margin-bottom:3px;opacity:.66}
+button{min-height:46px}
+input,select{min-height:44px}
+@media(max-width:680px){
+  .wrap{padding:20px 16px 56px}
+  .route{grid-template-columns:1fr}
+  h1{font-size:30px!important}
+  .row>div{min-width:100%!important}
+  button{width:100%}
+}
+
+body{background:#eef1f2;color:#253238;font-family:"PingFang SC","Microsoft YaHei",sans-serif}
+.wrap{max-width:1000px}
+header{padding:8px 0 20px;border-bottom:2px solid #1d6d73;margin-bottom:20px}
+header h1{font-size:36px;line-height:1.26;letter-spacing:-.02em}
+header p{color:#657277;font-size:14px}
+.card{background:#fbfcfc;border:1px solid #cfd8da;border-radius:2px;box-shadow:none}
+button{background:#1d6d73;border-radius:2px;letter-spacing:.05em}
+button:hover{background:#18595e}
+textarea,input,select{background:#fff;border-color:#cad5d7;border-radius:2px}
+textarea:focus,input:focus,select:focus{border-color:#1d6d73;box-shadow:0 0 0 2px #d5e6e7}
+.item{border-left:3px solid #1d6d73}
+h3{color:#1d6d73;letter-spacing:.08em}
+
+
+/* palette-normalized */
+:root{--bg:#eef1f2;--card:#fbfcfc;--ink:#253238;--text:#253238;--dim:#657277;--line:#cfd8da;--accent:#1d6d73}
+pre{background:#f3f7f7;color:#253238;border-color:#cfd8da;border-radius:2px}
+
+/* polish-batch1 */
+button.ghost,button.secondary{background:transparent!important;color:#1d6d73!important;border:1px solid #cfd8da!important}
+
+header{display:block!important;max-width:1020px;margin:0 auto!important;padding:24px 20px 0!important;background:transparent!important;border:0!important}
+header>span{display:none!important}
+header h1{font-size:36px!important;line-height:1.24!important;margin:0 0 8px!important;color:#1f2933!important}
+header .lede{margin:0!important}
+.route{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;max-width:1020px;min-height:58px;margin:14px auto 18px!important;background:#cfd8da!important;border:1px solid #cfd8da!important}
+.route span{display:block!important;padding:12px 14px!important;background:#fff!important;color:#1f2933!important}
+main{max-width:1020px;margin:0 auto;background:#fff;border-left:1px solid #cfd8da;border-right:1px solid #cfd8da}
+
+.brief{padding:18px 22px;border-bottom:1px solid #cfd6dc;background:#fbfcfc}
+.brief h3{font-size:14px;margin:0 0 8px;color:#2c5c8f;letter-spacing:.04em}
+.brief p{margin:0 0 8px;line-height:1.7;color:#3f4a53;font-size:14px}
+.brief ol{margin:0;padding-left:18px;color:#3f4a53;font-size:14px;line-height:1.8}
+
+/* mobile-32 */
+
+@media(max-width:760px){
+  main{grid-template-columns:1fr!important}
+  aside{border-right:0!important;border-bottom:1px solid #cfd8da;width:auto!important}
+  section{padding:16px!important}
+  .row{flex-wrap:wrap!important}
+  .row>div{min-width:100%!important}
+  h1{font-size:30px!important}
+  .route{grid-template-columns:1fr!important}
+  button{min-height:48px}
+  pre{overflow-x:auto}
+}
+
+/* mobile-height */
+@media(max-width:760px){main{min-height:auto!important}aside{min-height:0!important}}
 </style>
 </head>
 <body>
 <header>
-  <h1>知库</h1>
+  <h1><span class="prod">知库</span>这份资料，哪句能作数</h1>
   <span>本地知识库 · 答案带出处 · 模型 deepseek-flash</span>
-</header>
+
+    <p class="lede">给文档有多个版本的小团队：回答按段锚定引用，旧版和新版冲突并排提示，缺依据时显示检索到什么、还应补哪份文档。</p>
+  </header>
+  <div class="route" aria-label="任务步骤"><span><b>01</b>登记来源版本</span><span><b>02</b>按段找依据</span><span><b>03</b>并排看冲突</span></div>
+
 <main>
 <aside>
   <h2>库里的文档 <span id="stats"></span></h2>
@@ -90,6 +161,11 @@ PAGE = """<!doctype html>
     <button id="askbtn" onclick="ask()">问</button>
   </div>
   <div id="status"></div>
+  <div class="brief">
+    <h3>先导入两版制度，再问同一个问题</h3>
+    <p>答案按段带引用；同一句话在旧版和新版里不一样时，会并排标出生效范围和冲突。</p>
+    <ol><li>把两版制度分别存进库。</li><li>问一个具体问题，比如“报销最晚几天内提交”。</li><li>点引用落到原段，确认哪一版适用于这次。</li></ol>
+  </div>
   <div id="thread"></div>
 </section>
 </main>
